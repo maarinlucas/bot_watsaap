@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.5",
     "moment-timezone": "^0.5.46",
     "nodemon": "^3.1.7",
     "qrcode-terminal": "^0.12.0",
