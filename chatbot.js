@@ -1,6 +1,7 @@
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');  // Importa LocalAuth para salvar sessão
 const fs = require('fs');
+require('dotenv').config();  // Importa as variáveis do .env
 
 // Configuração do cliente com armazenamento local da sessão
 const client = new Client({
@@ -24,9 +25,7 @@ client.initialize();
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 // ID do grupo específico (substitua pelo ID real do grupo)
-const specificGroupId = '120363166123531760@g.us';  // Insira o ID do grupo aqui
-
-
+const specificGroupId = process.env.SPECIFIC_GROUP_ID;  // Usa a variável do .env
 
 client.on('message', async msg => {
     // Exibe o ID do grupo se a mensagem for enviada no grupo
@@ -35,31 +34,10 @@ client.on('message', async msg => {
     }
 });
 
-
 client.on('message', async msg => {
-    // Verifica se a mensagem é o comando '100' de um contato individual
-   /*  if (msg.body === '100' && msg.from.endsWith('@c.us')) {
-        const chat = await msg.getChat();
-        await delay(1000);
-        await chat.sendStateTyping();
-        await delay(1000);
-        await client.sendMessage(msg.from, '- Teste de mensagem automática 1');
-    }
-
-    if (msg.body === '200' && msg.from.endsWith('@c.us')) {
-        const chat = await msg.getChat();
-        await delay(3000);
-        await chat.sendStateTyping();
-        await delay(3000);
-        await client.sendMessage(msg.from, '- Teste de mensagem automática 2');
-    } */
-
     // Verifica se a mensagem é o comando '/100' de um membro no grupo específico
     if (msg.body === '/100' && msg.from.endsWith('@g.us') && msg.from === specificGroupId) {
         const groupChat = await msg.getChat();
-       /*  await delay(1000);
-        await groupChat.sendStateTyping();
-        await delay(1000); */
         await client.sendMessage(groupChat.id._serialized, '- Mensagem automática: Comando /100 recebido no grupo!');
     }
 });
