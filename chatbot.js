@@ -27,12 +27,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 // ID do grupo específico (substitua pelo ID real do grupo)
 const specificGroupId = process.env.SPECIFIC_GROUP_ID;  // Usa a variável do .env
 
-client.on('message', async msg => {
-    // Exibe o ID do grupo se a mensagem for enviada no grupo
-    if (msg.from.endsWith('@g.us')) {
-        console.log(`ID do grupo: ${msg.from}`);
-    }
-});
+
 
 client.on('message', async msg => {
     // Verifica se a mensagem é o comando '/100' de um membro no grupo específico
