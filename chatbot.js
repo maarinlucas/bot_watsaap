@@ -1,12 +1,13 @@
 // index.js
 
+const http = require('http');
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const responses = require('./responses');
 const { isRestrictedTime } = require('./utils');
 require('dotenv').config();
 
-// ID do grupo específico (definido como variável de ambiente no Heroku)
+// ID do grupo específico (definido como variável de ambiente)
 const specificGroupId = process.env.GROUP_ID;
 let points = {};
 let warningCount = {};
@@ -18,6 +19,7 @@ const client = new Client({
     })
 });
 
+// Exibir QR code no terminal para autenticação no WhatsApp
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
 });
@@ -112,4 +114,14 @@ client.on('group_join', async notification => {
     }
 });
 
+// Inicializa o cliente WhatsApp Web
 client.initialize();
+
+// Configura o servidor HTTP para o Render
+const PORT = process.env.PORT || 4000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('WhatsApp Bot está em execução');
+}).listen(PORT, () => {
+    console.log(`Servidor HTTP rodando na porta ${PORT}`);
+});
