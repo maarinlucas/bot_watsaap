@@ -1,18 +1,22 @@
+// index.js
+
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const responses = require('./responses');
 const { isRestrictedTime } = require('./utils');
 require('dotenv').config();
 
+// ID do grupo específico (definido como variável de ambiente no Heroku)
+const specificGroupId = process.env.GROUP_ID;
+let points = {};
+let warningCount = {};
+
+// Configuração do cliente WhatsApp Web
 const client = new Client({
     authStrategy: new LocalAuth({
         clientId: "example"
     })
 });
-
-const specificGroupId = '120363336744782655@g.us';
-let points = {};
-let warningCount = {};
 
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
@@ -32,8 +36,6 @@ client.on('message', async msg => {
             console.error('Erro ao enviar mensagem de comando /100 para o grupo:', error);
         }
     }
-
-
 
     // Responde ao comando se o bot foi mencionado
     if (
@@ -59,8 +61,6 @@ client.on('message', async msg => {
             const isAdmin = participants.some(participant => participant.id._serialized === msg.from && participant.isAdmin);
 
             // Se não for administrador, avise a pessoa para dormir
-
-
             if (!isAdmin) {
                 await client.sendMessage(msg.from, 'Ei, já é tarde! Que tal você ir dormir? Somente administradores podem enviar mensagens entre 23:00 e 6:00.');
                 console.log(`Aviso enviado para ${msg.from} para ir dormir.`);
@@ -78,14 +78,10 @@ client.on('message', async msg => {
             if (points[msg.from] > 3) {
                 try {
                     const groupChat = await client.getChatById(specificGroupId);
-
-
                     const participant = await groupChat.getParticipant(msg.from);
                     await groupChat.removeParticipants([participant.id._serialized]);
                     console.log(`Usuário ${msg.from} removido por exceder o limite de pontos.`);
                 } catch (error) {
-
-
                     console.error('Erro ao remover o usuário:', error);
                 }
             } else {
@@ -93,9 +89,7 @@ client.on('message', async msg => {
                 warningCount[msg.from] += 1;
 
                 const warningMessage = warningCount[msg.from] <= responses.warnings.length
-                    ? responses.
-
-                        warnings[warningCount[msg.from] - 1]
+                    ? responses.warnings[warningCount[msg.from] - 1]
                     : responses.finalWarning;
 
                 const chancesLeft = 3 - points[msg.from];
@@ -110,6 +104,7 @@ client.on('message', async msg => {
         }
     }
 });
+
 client.on('group_join', async notification => {
     const groupChat = await client.getChatById(notification.id.remote);
     if (groupChat.id._serialized === specificGroupId) {
