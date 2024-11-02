@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "moment-timezone": "^0.5.46",
+    "nodemon": "^3.1.7",
+    "qrcode-terminal": "^0.12.0",
+    "utils": "^0.3.1",
+    "whatsapp-web.js": "^1.18.4"
+  },
+  "name": "chatbot",
+  "version": "1.0.0",
+  "main": "chatbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
