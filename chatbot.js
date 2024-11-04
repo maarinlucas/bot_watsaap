@@ -20,16 +20,16 @@ const client = new Client({
 client.initialize();
 
 
-client.on('qr', qr => {
+/* client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
-});
+}); */
 
 
 // Exibir QR code no terminal para autenticação no WhatsApp
-/* client.on('qr', qr => {
+client.on('qr', qr => {
 const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qr)}`;
 console.log(`Scan the QR code at this URL: ${qrCodeUrl}`);
-}); */
+});
 
 
 
