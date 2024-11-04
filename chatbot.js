@@ -121,7 +121,7 @@ client.on('message', async msg => {
             if (allowedUserIds.includes(authorId)) {
                 try {
 
-                    await chat.sendMessage("Me chamo SENTINELA e sou um 🤖 feito de inteligência artificial,\n\nMinha missão é vigiar o grupo e garantir a ordem na ausência dos administradores...\n\n *Ezequiel 33:7*\n`Filho do homem, eu fiz de você uma sentinela para a nação de Israel; por isso, ouça a minha palavra e advirta-os em meu nome.` 📖\n\nDigite */ajuda* e confira os comandos disponíveis.");
+                    await chat.sendMessage("Me chamo SENTINELA e sou um 🤖 de inteligência artificial,\n\nMinha missão é vigiar o grupo e garantir a ordem na ausência dos administradores...\n\n *Ezequiel 33:7*\n`Filho do homem, eu fiz de você uma sentinela para a nação de Israel; por isso, ouça a minha palavra e advirta-os em meu nome.` 📖\n\nDigite */ajuda* e confira os comandos disponíveis.");
 
                 } catch (error) {
                     console.error(`Erro ao enviar o áudio:`, error);
@@ -225,21 +225,21 @@ client.on('message', async msg => {
 
         try {
 
-            await msg.reply("*/louvor*\n- Mostra a lista de louvores para download");
+            await msg.reply("*/louvor*\nMostra a lista de louvores para download");
         } catch (error) {
             console.error(`Erro ao executar o comando:`, error);
         }
     }
 
     if (
-        msg.body === '/comandos' &&
+        msg.body === '/admsComandos' &&
         msg.from === specificGroupId
     ) {
         if (allowedUserIds.includes(authorId)) {
 
             try {
 
-                await chat.sendMessage(`*Comando - Função*\n\n/limpar - limpa o cache do bot e reinicia a contagem de banimento do grupo`);
+                await chat.sendMessage(`*/limpar*\nlimpa o cache do bot e reinicia a contagem de banimento do grupo`);
             } catch (error) {
                 console.error(`Erro ao executar o comando:`, error);
             }
