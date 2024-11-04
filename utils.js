@@ -4,7 +4,7 @@
 function isRestrictedTime() {
   const now = new Date();
   const hours = now.getHours();
-  return (hours >= 23 || hours < 6);
+  return (hours >= 23 || hours < 0);
 }
 
 module.exports = {
